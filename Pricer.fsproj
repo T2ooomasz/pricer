@@ -5,9 +5,11 @@
     <ProduceReferenceAssembly>false</ProduceReferenceAssembly>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Calculation.fs" />
     <Compile Include="Utils.fs" />
     <Compile Include="Money.fs" />
     <Compile Include="Configuration.fs" />
+    <Compile Include="OptionS.fs" />
     <Compile Include="Payment.fs" />
     <Compile Include="Trades.fs" />
     <Compile Include="Valuation.fs" />
@@ -18,6 +20,7 @@
     <Compile Include="View.fs" />
     <Compile Include="Main.fs" />
     <Compile Include="Startup.fs" />
+    
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Bolero" Version="0.*" />

@@ -15,11 +15,13 @@ type UITrade =
      member this.Name =
           match this.trade with
           | Payment p -> p.TradeName
+          | OptionS o -> o.Stock
 
 /// Routing endpoints definition.
 type Page =
     | [<EndPoint "/">] Home
     | [<EndPoint "/config">] Config
+    | [<EndPoint "/tomek">] Tomek
 
 /// The Elmish application's model.
 type Model =
@@ -62,5 +64,11 @@ module Trades =
   let onlyPayments (trades : Map<_,UITrade>) =
       trades |> choose (fun t -> match t.trade with 
                                   | Payment p -> Some <| (t.id,p)
-                                  // | _ -> None //this line will be needed when there's more trade types
+                                  | _ -> None //this line will be needed when there's more trade types
+                        )
+
+  let onlyOptions (trades : Map<_,UITrade>) =
+      trades |> choose (fun t -> match t.trade with 
+                                  | OptionS p -> Some <| (t.id,p)
+                                  | _ -> None //this line will be needed when there's more trade types
                         )

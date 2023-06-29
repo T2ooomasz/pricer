@@ -9,11 +9,49 @@
       },
       {
         "key":"USDPLN",
-        "value":"4.3"
+        "value":"4.06"
       },
       {
         "key":"USDEUR",
         "value":"0.95"
+      },
+      {
+        "key":"HUFPLN",
+        "value":"100"
+      }
+    ]
+  },
+  {
+    "category":"NYSE",
+    "config":
+    [
+      {
+        "key":"AAPL",
+        "value":"190"
+      },
+      {
+        "key":"GOOGL",
+        "value":"120"
+      },
+      {
+        "key":"AMZN",
+        "value":"129"
+      },
+      {
+        "key":"MSFT",
+        "value":"336"
+      },
+      {
+        "key":"TSLA",
+        "value":"257"
+      },
+      {
+        "key":"META",
+        "value":"286"
+      },
+      {
+        "key":"NVDA",
+        "value":"411"
       }
     ]
   }

@@ -32,6 +32,55 @@
       </tbody>
     </table>
     </div>
+
+
+    <h1 class="title">Options</h1>
+    <button class="rz-button rz-secondary rz-ripple rz-border-radius-1"
+            onclick="${RecalculateAll}">Recalculate All</button>
+    <button class="rz-button rz-secondary rz-ripple rz-border-radius-1"
+            onclick="${AddOption}">Add Option</button>
+    <table class="rz-grid-table">
+      <tbody>
+        <tr>
+          <th></th>
+          <th style="width: 7%;">ID</th>
+          <th style="width: 7%;">Stock</th>
+          <th style="width: 7%;">Type</th>
+          <th style="width: 7%;">Expiry</th>
+          <th style="width: 7%;">ExpectedPrice</th>
+          <th style="width: 7%;">Drift</th>
+          <th style="width: 7%;">Volatility</th>
+          <th style="width: 7%;">Principal</th>
+          <th style="width: 7%;">Currency</th>
+          <th style="width: 7%;">ValueMc</th>
+          <th style="width: 7%;">ValueAn</th>
+          <th style="width: 7%;">Delta</th>
+        </tr>
+        <template id="OptionsRow">
+          <tr>
+            <td><button class="rz-button rz-ripple rz-border-radius-1"
+                        onclick="${Delete}">X</button></td>
+            <td><input bind-onchange="${ID}"/></td>
+            <td><input bind-onchange="${Stock}"/></td>
+            <td><input bind-onchange="${Type}"/></td>
+            <td><input bind-onchange="${Expiry}"/></td>
+            <td><input bind-onchange="${ExpectedPrice}"/></td>
+            <td><input bind-onchange="${Drift}"/></td>
+            <td><input bind-onchange="${Volatility}"/></td>
+            <td><input bind-onchange="${Principal}"/></td>
+            <td><input bind-onchange="${Currency}"/></td>
+            <td>${ValueMc}</td>
+            <td>${ValueAn}</td>
+            <td><input bind-onchange="${Delta}"/></td>
+          </tr>
+        </template>
+        ${OptionRows}
+      </tbody>
+    </table>
+    </div>
+
+
+
   </template>
 
   <template id="Summary">

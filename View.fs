@@ -7,6 +7,7 @@ open Messages
 open Model
 open Money
 open Payment
+open OptionS
 open Radzen.Blazor
 open System.Collections.Generic
 open Trades
@@ -26,7 +27,10 @@ let keyValueMapDisplay msg name (model: Map<string,string>) dispatch =
         .Elt()
 
 let configDisplay = keyValueMapDisplay ConfigChange "Configuration"
-        
+
+let tomekDisplay = keyValueMapDisplay ConfigChange "Tomek"
+  
+
 let marketDataDisplay = keyValueMapDisplay MarketDataChange "Market Data"
         
 let plotLineChart (data : ChartData) =
@@ -66,6 +70,7 @@ let summary (model: Model) dispatch =
         |> Seq.choose (fun x ->
             match x.trade with
             | Payment p -> p.Value
+            | OptionS o -> o.ValueMc
             )
         |> Seq.groupBy (fun m -> m.Currency)
     let summaryRow (ccy,values : Money seq) =
@@ -90,14 +95,37 @@ let paymentRow dispatch (tradeId, p : PaymentRecord) =
         .Delete(fun e -> dispatch (RemoveTrade tradeId))
         .Elt()
 
+let optionRow dispatch (tradeId, p : OptionRecord) =
+    let valueMc = p.ValueMc |> Option.map (string) |> Option.defaultValue "" 
+    let valueAn = p.ValueAn |> Option.map (string) |> Option.defaultValue "" 
+    let tradeChange msg s = dispatch <| TradeChange (msg (tradeId,s))
+    Templates.OptionsRow()
+        .ID(p.OptionID, tradeChange NewID)
+        .Stock(p.Stock, tradeChange NewStock)
+        .Type(p.OptionType,tradeChange NewType)
+        .Expiry(sprintf "%A" p.Expiry, tradeChange NewExpiry)
+        .ExpectedPrice(sprintf "%f" p.ExpectedPrice, tradeChange NewExpectedPrice)
+        .Drift(sprintf "%f" p.Drift, tradeChange NewDrift)
+        .Principal(sprintf "%i" p.Principal, tradeChange NewPrincipal)
+        .Volatility(sprintf "%f" p.Volatility, tradeChange NewVolatility)
+        .Currency(p.Currency, tradeChange NewCurrency)
+        .ValueMc(valueMc)
+        .ValueAn(valueAn)
+        .Delta(sprintf "%f" p.Delta, tradeChange NewDelta)
+        .Delete(fun e -> dispatch (RemoveTrade tradeId))
+        .Elt()
+
 let homePage (model: Model) dispatch =
 
     let payments = onlyPayments model.trades
+    let options = onlyOptions model.trades
     let trades = 
         Templates.Trades()
             .AddPayment(fun _ -> dispatch AddPayment)
+            .AddOption(fun _ -> dispatch AddOption)
             .RecalculateAll(fun _ -> dispatch RecalculateAll)
             .PaymentRows(forEach payments (paymentRow dispatch))
+            .OptionRows(forEach options (optionRow dispatch))
             .Elt()
 
     Templates.Home()
@@ -120,11 +148,13 @@ let view router model dispatch =
         .Menu(concat {
             menuItem model router Home "Home"
             menuItem model router Config "Config"
+            menuItem model router Tomek "Tomek"
         })
         .Body(
             cond model.page <| function
             | Home -> homePage model dispatch
             | Config -> configDisplay model.configuration dispatch
+            | Tomek -> tomekDisplay model.configuration dispatch
         )
         .Error(
             cond model.error <| function

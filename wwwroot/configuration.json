@@ -6,6 +6,10 @@
       {
         "key":"runs",
         "value":"100"
+      },
+      {
+        "key":"steps",
+        "value":"50"
       }
     ]
   },
@@ -19,7 +23,19 @@
       },
       {
         "key":"knownCurrencies",
-        "value":"USD PLN EUR GBP"
+        "value":"USD PLN EUR GBP HUF"
+      },
+      {
+        "key":"knownStocks",
+        "value":"AAPL GOOGL MSFT AMZN TSLA META NVDA"
+      },
+      {
+        "key":"takeProfit",
+        "value":"10"
+      },
+      {
+        "key":"knownOptionType",
+        "value":"EurCall EurPut AsiCall AsiPut AmCall AmPut"
       }
     ]
   },
